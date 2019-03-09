@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"google-speech/api"
+	v1 "google-speech/pkg/api/v1"
 	"log"
 
 	"golang.org/x/net/context"
@@ -18,10 +18,10 @@ func main() {
 	}
 	defer conn.Close()
 
-	h := api.NewHealthClient(conn)
+	h := v1.NewHealthClient(conn)
 
 	fmt.Println(h)
-	healthCheck, err := h.HealthCheck(context.Background(), &api.HealthMessage{})
+	healthCheck, err := h.HealthCheck(context.Background(), &v1.HealthMessage{})
 
 	fmt.Println(err)
 	log.Printf("Response from health : %s \n", healthCheck.Health)

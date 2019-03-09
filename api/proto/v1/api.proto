@@ -1,0 +1,26 @@
+syntax = "proto3";
+package v1;
+
+
+message HealthMessage {
+    string health = 1;
+    bool status = 2;
+}
+
+service Health {
+    rpc HealthCheck(HealthMessage) returns (HealthMessage) {}
+}
+
+message TextToSpeechIn{
+    string data = 1;
+}
+
+
+
+message TextToSpeechOut{
+    string response =1;
+}
+
+service TextToSpeech {
+    rpc GenerateSpeech(TextToSpeechIn) returns (TextToSpeechOut){}
+}
