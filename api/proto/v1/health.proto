@@ -13,11 +13,3 @@ service Health {
 
 
 
-message TextToSpeechMessage {
-    string data = 1;
-    string response =2;
-}
-
-service TextToSpeech {
-    rpc GenerateSpeech(TextToSpeechMessage) returns (TextToSpeechMessage){}
-}
