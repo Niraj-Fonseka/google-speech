@@ -12,7 +12,7 @@ import (
 	v1 "google-speech/pkg/api/v1"
 )
 
-func RunServer(ctx context.Context, v1API v1.HealthServer, port string) error {
+func RunServer(ctx context.Context, v1Health v1.HealthServer, v1TTS v1.TextToSpeechServer, port string) error {
 	listen, err := net.Listen("tcp", ":"+port)
 	if err != nil {
 		return err
@@ -20,7 +20,8 @@ func RunServer(ctx context.Context, v1API v1.HealthServer, port string) error {
 
 	// register service
 	server := grpc.NewServer()
-	v1.RegisterHealthServer(server, v1API)
+	v1.RegisterHealthServer(server, v1Health)
+	v1.RegisterTextToSpeechServer(server, v1TTS)
 
 	// graceful shutdown
 	c := make(chan os.Signal, 1)

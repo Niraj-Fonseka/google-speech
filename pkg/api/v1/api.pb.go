@@ -9,8 +9,7 @@ It is generated from these files:
 
 It has these top-level messages:
 	HealthMessage
-	TextToSpeechIn
-	TextToSpeechOut
+	TextToSpeechMessage
 */
 package v1
 
@@ -58,32 +57,24 @@ func (m *HealthMessage) GetStatus() bool {
 	return false
 }
 
-type TextToSpeechIn struct {
-	Data string `protobuf:"bytes,1,opt,name=data" json:"data,omitempty"`
+type TextToSpeechMessage struct {
+	Data     string `protobuf:"bytes,1,opt,name=data" json:"data,omitempty"`
+	Response string `protobuf:"bytes,2,opt,name=response" json:"response,omitempty"`
 }
 
-func (m *TextToSpeechIn) Reset()                    { *m = TextToSpeechIn{} }
-func (m *TextToSpeechIn) String() string            { return proto.CompactTextString(m) }
-func (*TextToSpeechIn) ProtoMessage()               {}
-func (*TextToSpeechIn) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
+func (m *TextToSpeechMessage) Reset()                    { *m = TextToSpeechMessage{} }
+func (m *TextToSpeechMessage) String() string            { return proto.CompactTextString(m) }
+func (*TextToSpeechMessage) ProtoMessage()               {}
+func (*TextToSpeechMessage) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{1} }
 
-func (m *TextToSpeechIn) GetData() string {
+func (m *TextToSpeechMessage) GetData() string {
 	if m != nil {
 		return m.Data
 	}
 	return ""
 }
 
-type TextToSpeechOut struct {
-	Response string `protobuf:"bytes,1,opt,name=response" json:"response,omitempty"`
-}
-
-func (m *TextToSpeechOut) Reset()                    { *m = TextToSpeechOut{} }
-func (m *TextToSpeechOut) String() string            { return proto.CompactTextString(m) }
-func (*TextToSpeechOut) ProtoMessage()               {}
-func (*TextToSpeechOut) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{2} }
-
-func (m *TextToSpeechOut) GetResponse() string {
+func (m *TextToSpeechMessage) GetResponse() string {
 	if m != nil {
 		return m.Response
 	}
@@ -92,8 +83,7 @@ func (m *TextToSpeechOut) GetResponse() string {
 
 func init() {
 	proto.RegisterType((*HealthMessage)(nil), "v1.HealthMessage")
-	proto.RegisterType((*TextToSpeechIn)(nil), "v1.TextToSpeechIn")
-	proto.RegisterType((*TextToSpeechOut)(nil), "v1.TextToSpeechOut")
+	proto.RegisterType((*TextToSpeechMessage)(nil), "v1.TextToSpeechMessage")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -171,7 +161,7 @@ var _Health_serviceDesc = grpc.ServiceDesc{
 // Client API for TextToSpeech service
 
 type TextToSpeechClient interface {
-	GenerateSpeech(ctx context.Context, in *TextToSpeechIn, opts ...grpc.CallOption) (*TextToSpeechOut, error)
+	GenerateSpeech(ctx context.Context, in *TextToSpeechMessage, opts ...grpc.CallOption) (*TextToSpeechMessage, error)
 }
 
 type textToSpeechClient struct {
@@ -182,8 +172,8 @@ func NewTextToSpeechClient(cc *grpc.ClientConn) TextToSpeechClient {
 	return &textToSpeechClient{cc}
 }
 
-func (c *textToSpeechClient) GenerateSpeech(ctx context.Context, in *TextToSpeechIn, opts ...grpc.CallOption) (*TextToSpeechOut, error) {
-	out := new(TextToSpeechOut)
+func (c *textToSpeechClient) GenerateSpeech(ctx context.Context, in *TextToSpeechMessage, opts ...grpc.CallOption) (*TextToSpeechMessage, error) {
+	out := new(TextToSpeechMessage)
 	err := grpc.Invoke(ctx, "/v1.TextToSpeech/GenerateSpeech", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
@@ -194,7 +184,7 @@ func (c *textToSpeechClient) GenerateSpeech(ctx context.Context, in *TextToSpeec
 // Server API for TextToSpeech service
 
 type TextToSpeechServer interface {
-	GenerateSpeech(context.Context, *TextToSpeechIn) (*TextToSpeechOut, error)
+	GenerateSpeech(context.Context, *TextToSpeechMessage) (*TextToSpeechMessage, error)
 }
 
 func RegisterTextToSpeechServer(s *grpc.Server, srv TextToSpeechServer) {
@@ -202,7 +192,7 @@ func RegisterTextToSpeechServer(s *grpc.Server, srv TextToSpeechServer) {
 }
 
 func _TextToSpeech_GenerateSpeech_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TextToSpeechIn)
+	in := new(TextToSpeechMessage)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -214,7 +204,7 @@ func _TextToSpeech_GenerateSpeech_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/v1.TextToSpeech/GenerateSpeech",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TextToSpeechServer).GenerateSpeech(ctx, req.(*TextToSpeechIn))
+		return srv.(TextToSpeechServer).GenerateSpeech(ctx, req.(*TextToSpeechMessage))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -235,19 +225,18 @@ var _TextToSpeech_serviceDesc = grpc.ServiceDesc{
 func init() { proto.RegisterFile("api.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 213 bytes of a gzipped FileDescriptorProto
+	// 201 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0xe2, 0x4c, 0x2c, 0xc8, 0xd4,
 	0x2b, 0x28, 0xca, 0x2f, 0xc9, 0x17, 0x62, 0x2a, 0x33, 0x54, 0xb2, 0xe7, 0xe2, 0xf5, 0x48, 0x4d,
 	0xcc, 0x29, 0xc9, 0xf0, 0x4d, 0x2d, 0x2e, 0x4e, 0x4c, 0x4f, 0x15, 0x12, 0xe3, 0x62, 0xcb, 0x00,
 	0x0b, 0x48, 0x30, 0x2a, 0x30, 0x6a, 0x70, 0x06, 0x41, 0x79, 0x20, 0xf1, 0xe2, 0x92, 0xc4, 0x92,
-	0xd2, 0x62, 0x09, 0x26, 0x05, 0x46, 0x0d, 0x8e, 0x20, 0x28, 0x4f, 0x49, 0x85, 0x8b, 0x2f, 0x24,
-	0xb5, 0xa2, 0x24, 0x24, 0x3f, 0xb8, 0x20, 0x35, 0x35, 0x39, 0xc3, 0x33, 0x4f, 0x48, 0x88, 0x8b,
-	0x25, 0x25, 0xb1, 0x24, 0x11, 0xaa, 0x1f, 0xcc, 0x56, 0xd2, 0xe5, 0xe2, 0x47, 0x56, 0xe5, 0x5f,
-	0x5a, 0x22, 0x24, 0xc5, 0xc5, 0x51, 0x94, 0x5a, 0x5c, 0x90, 0x9f, 0x57, 0x9c, 0x0a, 0x55, 0x0a,
-	0xe7, 0x1b, 0xd9, 0x73, 0xb1, 0x41, 0x5c, 0x25, 0x64, 0xca, 0xc5, 0x0d, 0x61, 0x39, 0x67, 0xa4,
-	0x26, 0x67, 0x0b, 0x09, 0xea, 0x95, 0x19, 0xea, 0xa1, 0x38, 0x58, 0x0a, 0x53, 0x48, 0x89, 0xc1,
-	0xc8, 0x9b, 0x8b, 0x07, 0xd9, 0x3e, 0x21, 0x6b, 0x2e, 0x3e, 0xf7, 0xd4, 0xbc, 0xd4, 0xa2, 0xc4,
-	0x92, 0x54, 0xa8, 0x88, 0x10, 0x48, 0x1b, 0xaa, 0xcb, 0xa5, 0x84, 0xd1, 0xc5, 0xfc, 0x4b, 0x4b,
-	0x94, 0x18, 0x92, 0xd8, 0xc0, 0xc1, 0x65, 0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x94, 0x0e, 0x01,
-	0xb8, 0x3b, 0x01, 0x00, 0x00,
+	0xd2, 0x62, 0x09, 0x26, 0x05, 0x46, 0x0d, 0x8e, 0x20, 0x28, 0x4f, 0xc9, 0x95, 0x4b, 0x38, 0x24,
+	0xb5, 0xa2, 0x24, 0x24, 0x3f, 0xb8, 0x20, 0x35, 0x35, 0x19, 0x6e, 0x8c, 0x10, 0x17, 0x4b, 0x4a,
+	0x62, 0x49, 0x22, 0xd4, 0x10, 0x30, 0x5b, 0x48, 0x8a, 0x8b, 0xa3, 0x28, 0xb5, 0xb8, 0x20, 0x3f,
+	0xaf, 0x38, 0x15, 0x6c, 0x08, 0x67, 0x10, 0x9c, 0x6f, 0x64, 0xcf, 0xc5, 0x06, 0x71, 0x87, 0x90,
+	0x29, 0x17, 0x37, 0x84, 0xe5, 0x9c, 0x91, 0x9a, 0x9c, 0x2d, 0x24, 0xa8, 0x57, 0x66, 0xa8, 0x87,
+	0xe2, 0x44, 0x29, 0x4c, 0x21, 0x25, 0x06, 0xa3, 0x10, 0x2e, 0x1e, 0x64, 0x77, 0x08, 0xb9, 0x70,
+	0xf1, 0xb9, 0xa7, 0xe6, 0xa5, 0x16, 0x25, 0x96, 0xa4, 0x42, 0x45, 0xc4, 0x41, 0xda, 0xb0, 0xb8,
+	0x55, 0x0a, 0x97, 0x84, 0x12, 0x43, 0x12, 0x1b, 0x38, 0xa4, 0x8c, 0x01, 0x01, 0x00, 0x00, 0xff,
+	0xff, 0xe7, 0x6e, 0x9f, 0x01, 0x36, 0x01, 0x00, 0x00,
 }

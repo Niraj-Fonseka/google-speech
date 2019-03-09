@@ -9,8 +9,9 @@ import (
 func RunServer() error {
 	ctx := context.Background()
 
-	v1API := v1.NewHealthServiceServer()
+	APIHealth := v1.NewHealthServiceServer()
+	APITTs := v1.NewTextToSpeechServiceServer()
 
-	return grpc.RunServer(ctx, v1API, "8080")
+	return grpc.RunServer(ctx, APIHealth, APITTs, "8080")
 
 }
