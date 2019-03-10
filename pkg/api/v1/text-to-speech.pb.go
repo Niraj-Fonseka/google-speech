@@ -3,13 +3,12 @@
 
 package v1
 
-import proto "github.com/golang/protobuf/proto"
-import fmt "fmt"
-import math "math"
-
 import (
-	context "golang.org/x/net/context"
+	context "context"
+	fmt "fmt"
+	proto "github.com/golang/protobuf/proto"
 	grpc "google.golang.org/grpc"
+	math "math"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -17,15 +16,44 @@ var _ = proto.Marshal
 var _ = fmt.Errorf
 var _ = math.Inf
 
+// This is a compile-time assertion to ensure that this generated file
+// is compatible with the proto package it is being compiled against.
+// A compilation error at this line likely means your copy of the
+// proto package needs to be updated.
+const _ = proto.ProtoPackageIsVersion3 // please upgrade the proto package
+
 type TextToSpeechMessage struct {
-	Data     string `protobuf:"bytes,1,opt,name=data" json:"data,omitempty"`
-	Response string `protobuf:"bytes,2,opt,name=response" json:"response,omitempty"`
+	Data                 string   `protobuf:"bytes,1,opt,name=data,proto3" json:"data,omitempty"`
+	Response             string   `protobuf:"bytes,2,opt,name=response,proto3" json:"response,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *TextToSpeechMessage) Reset()                    { *m = TextToSpeechMessage{} }
-func (m *TextToSpeechMessage) String() string            { return proto.CompactTextString(m) }
-func (*TextToSpeechMessage) ProtoMessage()               {}
-func (*TextToSpeechMessage) Descriptor() ([]byte, []int) { return fileDescriptor1, []int{0} }
+func (m *TextToSpeechMessage) Reset()         { *m = TextToSpeechMessage{} }
+func (m *TextToSpeechMessage) String() string { return proto.CompactTextString(m) }
+func (*TextToSpeechMessage) ProtoMessage()    {}
+func (*TextToSpeechMessage) Descriptor() ([]byte, []int) {
+	return fileDescriptor_b9986876923d8fa2, []int{0}
+}
+
+func (m *TextToSpeechMessage) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_TextToSpeechMessage.Unmarshal(m, b)
+}
+func (m *TextToSpeechMessage) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_TextToSpeechMessage.Marshal(b, m, deterministic)
+}
+func (m *TextToSpeechMessage) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_TextToSpeechMessage.Merge(m, src)
+}
+func (m *TextToSpeechMessage) XXX_Size() int {
+	return xxx_messageInfo_TextToSpeechMessage.Size(m)
+}
+func (m *TextToSpeechMessage) XXX_DiscardUnknown() {
+	xxx_messageInfo_TextToSpeechMessage.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_TextToSpeechMessage proto.InternalMessageInfo
 
 func (m *TextToSpeechMessage) GetData() string {
 	if m != nil {
@@ -45,6 +73,21 @@ func init() {
 	proto.RegisterType((*TextToSpeechMessage)(nil), "v1.TextToSpeechMessage")
 }
 
+func init() { proto.RegisterFile("text-to-speech.proto", fileDescriptor_b9986876923d8fa2) }
+
+var fileDescriptor_b9986876923d8fa2 = []byte{
+	// 142 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x29, 0x49, 0xad, 0x28,
+	0xd1, 0x2d, 0xc9, 0xd7, 0x2d, 0x2e, 0x48, 0x4d, 0x4d, 0xce, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9,
+	0x17, 0x62, 0x2a, 0x33, 0x54, 0x72, 0xe5, 0x12, 0x0e, 0x49, 0xad, 0x28, 0x09, 0xc9, 0x0f, 0x06,
+	0xcb, 0xf8, 0xa6, 0x16, 0x17, 0x27, 0xa6, 0xa7, 0x0a, 0x09, 0x71, 0xb1, 0xa4, 0x24, 0x96, 0x24,
+	0x4a, 0x30, 0x2a, 0x30, 0x6a, 0x70, 0x06, 0x81, 0xd9, 0x42, 0x52, 0x5c, 0x1c, 0x45, 0xa9, 0xc5,
+	0x05, 0xf9, 0x79, 0xc5, 0xa9, 0x12, 0x4c, 0x60, 0x71, 0x38, 0xdf, 0x28, 0x84, 0x8b, 0x07, 0xd9,
+	0x18, 0x21, 0x17, 0x2e, 0x3e, 0xf7, 0xd4, 0xbc, 0xd4, 0xa2, 0xc4, 0x92, 0x54, 0xa8, 0x88, 0xb8,
+	0x5e, 0x99, 0xa1, 0x1e, 0x16, 0xab, 0xa4, 0x70, 0x49, 0x28, 0x31, 0x24, 0xb1, 0x81, 0xdd, 0x69,
+	0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x52, 0x04, 0x2c, 0x1c, 0xbf, 0x00, 0x00, 0x00,
+}
+
 // Reference imports to suppress errors if they are not otherwise used.
 var _ context.Context
 var _ grpc.ClientConn
@@ -53,8 +96,9 @@ var _ grpc.ClientConn
 // is compatible with the grpc package it is being compiled against.
 const _ = grpc.SupportPackageIsVersion4
 
-// Client API for TextToSpeech service
-
+// TextToSpeechClient is the client API for TextToSpeech service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://godoc.org/google.golang.org/grpc#ClientConn.NewStream.
 type TextToSpeechClient interface {
 	GenerateSpeech(ctx context.Context, in *TextToSpeechMessage, opts ...grpc.CallOption) (*TextToSpeechMessage, error)
 }
@@ -69,15 +113,14 @@ func NewTextToSpeechClient(cc *grpc.ClientConn) TextToSpeechClient {
 
 func (c *textToSpeechClient) GenerateSpeech(ctx context.Context, in *TextToSpeechMessage, opts ...grpc.CallOption) (*TextToSpeechMessage, error) {
 	out := new(TextToSpeechMessage)
-	err := grpc.Invoke(ctx, "/v1.TextToSpeech/GenerateSpeech", in, out, c.cc, opts...)
+	err := c.cc.Invoke(ctx, "/v1.TextToSpeech/GenerateSpeech", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// Server API for TextToSpeech service
-
+// TextToSpeechServer is the server API for TextToSpeech service.
 type TextToSpeechServer interface {
 	GenerateSpeech(context.Context, *TextToSpeechMessage) (*TextToSpeechMessage, error)
 }
@@ -115,19 +158,4 @@ var _TextToSpeech_serviceDesc = grpc.ServiceDesc{
 	},
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "text-to-speech.proto",
-}
-
-func init() { proto.RegisterFile("text-to-speech.proto", fileDescriptor1) }
-
-var fileDescriptor1 = []byte{
-	// 142 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xe2, 0x12, 0x29, 0x49, 0xad, 0x28,
-	0xd1, 0x2d, 0xc9, 0xd7, 0x2d, 0x2e, 0x48, 0x4d, 0x4d, 0xce, 0xd0, 0x2b, 0x28, 0xca, 0x2f, 0xc9,
-	0x17, 0x62, 0x2a, 0x33, 0x54, 0x72, 0xe5, 0x12, 0x0e, 0x49, 0xad, 0x28, 0x09, 0xc9, 0x0f, 0x06,
-	0xcb, 0xf8, 0xa6, 0x16, 0x17, 0x27, 0xa6, 0xa7, 0x0a, 0x09, 0x71, 0xb1, 0xa4, 0x24, 0x96, 0x24,
-	0x4a, 0x30, 0x2a, 0x30, 0x6a, 0x70, 0x06, 0x81, 0xd9, 0x42, 0x52, 0x5c, 0x1c, 0x45, 0xa9, 0xc5,
-	0x05, 0xf9, 0x79, 0xc5, 0xa9, 0x12, 0x4c, 0x60, 0x71, 0x38, 0xdf, 0x28, 0x84, 0x8b, 0x07, 0xd9,
-	0x18, 0x21, 0x17, 0x2e, 0x3e, 0xf7, 0xd4, 0xbc, 0xd4, 0xa2, 0xc4, 0x92, 0x54, 0xa8, 0x88, 0xb8,
-	0x5e, 0x99, 0xa1, 0x1e, 0x16, 0xab, 0xa4, 0x70, 0x49, 0x28, 0x31, 0x24, 0xb1, 0x81, 0xdd, 0x69,
-	0x0c, 0x08, 0x00, 0x00, 0xff, 0xff, 0x52, 0x04, 0x2c, 0x1c, 0xbf, 0x00, 0x00, 0x00,
 }
