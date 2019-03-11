@@ -1,10 +1,12 @@
 package v1
 
 import (
+	"bytes"
 	"fmt"
 	v1 "google-speech/pkg/api/v1"
 	"io/ioutil"
 	"log"
+	"os/exec"
 
 	texttospeech "cloud.google.com/go/texttospeech/apiv1"
 	"golang.org/x/net/context"
@@ -27,15 +29,13 @@ func (s *TextToSpeechServiceServer) GenerateSpeech(ctx context.Context, in *v1.T
 		log.Fatal(err)
 	}
 
-	// Perform the text-to-speech request on the text input with the selected
-	// voice parameters and audio file type.
 	req := texttospeechpb.SynthesizeSpeechRequest{
-		// Set the text input to be synthesized.
 		Input: &texttospeechpb.SynthesisInput{
 			InputSource: &texttospeechpb.SynthesisInput_Text{Text: in.Data},
 		},
 		// Build the voice request, select the language code ("en-US") and the SSML
 		// voice gender ("neutral").
+		// need to set the gender
 		Voice: &texttospeechpb.VoiceSelectionParams{
 			LanguageCode: "en-US",
 			SsmlGender:   texttospeechpb.SsmlVoiceGender_NEUTRAL,
@@ -57,6 +57,21 @@ func (s *TextToSpeechServiceServer) GenerateSpeech(ctx context.Context, in *v1.T
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	if in.Play {
+		fmt.Println("Playing")
+		cmd := exec.Command("play", filename)
+
+		var out bytes.Buffer
+		cmd.Stdout = &out
+		err := cmd.Run()
+		if err != nil {
+			log.Fatal(err)
+		} else {
+			fmt.Println(out.String())
+		}
+	}
+
 	fmt.Printf("Audio content written to file: %v\n", filename)
 
 	return &v1.TextToSpeechMessage{Response: "Audio Generated"}, nil

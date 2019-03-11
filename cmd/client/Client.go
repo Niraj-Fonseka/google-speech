@@ -27,7 +27,7 @@ func main() {
 	log.Printf("Response from health : %s \n", healthCheck.Health)
 
 	tts := v1.NewTextToSpeechClient(conn)
-	textTospch, err := tts.GenerateSpeech(context.Background(), &v1.TextToSpeechMessage{Data: "Convert This Text Please"})
+	textTospch, err := tts.GenerateSpeech(context.Background(), &v1.TextToSpeechMessage{Data: "Convert This Text Please", Play: true})
 
 	log.Printf("Response from Text to Speech : %s \n", textTospch.Response)
 }
